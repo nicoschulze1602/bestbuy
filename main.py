@@ -1,5 +1,5 @@
-import products
-import store
+from store import Store
+from products import Product
 
 def print_store_menu():
     print('\n   Store Menu   ')
@@ -15,7 +15,7 @@ def start(store_obj):
         print_store_menu()
         choice = input('Please choose a number: ')
         if choice == '1':
-            print("\nAvailable Products:")
+            print()
             for product in store_obj.get_all_products():
                 print(product.show())
 
@@ -46,13 +46,14 @@ def start(store_obj):
 
                 product = active_products[int(product_number) - 1]
 
-                quantity_str = input("Quantity: ").strip()
+                quantity_str = input("What amount do you want? ").strip()
                 if not quantity_str.isdigit():
                     print("Invalid quantity.")
                     continue
 
                 quantity = int(quantity_str)
                 shopping_list.append((product, quantity))
+                print("Product added to shopping list.")
 
             try:
                 total_price = store_obj.order(shopping_list)
@@ -60,14 +61,21 @@ def start(store_obj):
             except ValueError as e:
                 print(f"Order failed: {e}")
 
+        elif choice == '4':
+            print('Bye  (•◡•) /')
+            break
+
+        else:
+            print("Invalid choice. Please select a valid option.")
+
 
 def main():
     # setup initial stock of inventory
-    product_list = [ products.Product("MacBook Air M2", price=1450, quantity=100),
-                     products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-                     products.Product("Google Pixel 7", price=500, quantity=250)
+    product_list = [ Product("MacBook Air M2", price=1450, quantity=100),
+                     Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+                     Product("Google Pixel 7", price=500, quantity=250)
                    ]
-    best_buy = store.Store(product_list)
+    best_buy = Store(product_list)
     start(best_buy)
 
 if __name__ == '__main__':
