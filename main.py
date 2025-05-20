@@ -52,6 +52,10 @@ def start(store_obj):
                     continue
 
                 quantity = int(quantity_str)
+                if quantity > product.get_quantity():
+                    print(f"Not enough in stock. Only {product.get_quantity()} available.")
+                    continue
+
                 shopping_list.append((product, quantity))
                 print("Product added to shopping list.")
 
